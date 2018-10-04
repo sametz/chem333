@@ -9,20 +9,25 @@ from plotly.offline import download_plotlyjs, init_notebook_mode, plot, iplot
 from nmrtools.nmrmath import first_order
 from nmrtools.nmrplot import add_signals
 
+layout = go.Layout(
+    xaxis={'autorange': 'reversed'}
+)
 
-def interactive_dd(J1=3.0, J2=7.0):
+
+def interactive_dd(J1=3.0, J2=7.0, w=0.5):
     args = (J1, J2)
     x = np.linspace(85, 115, 800)
     signal = (100.0, 1)
     couplings = [(J1, 1), (J2, 1)]
     spectrum = first_order(signal, couplings)
-    y = add_signals(x, spectrum, 0.5)
+    y = add_signals(x, spectrum, w)
     obj = go.Scatter(x=x, y=y)
     data = [obj]
-    iplot(data)
+    fig = go.Figure(data=data, layout=layout)
+    iplot(fig)
 
 
-def interactive_ddd(J1=3.0, J2=7.0, J3=10.0):
+def interactive_ddd(J1=4.0, J2=10.0, J3=12.0):
     args = (J1, J2, J3)
     x = np.linspace(75, 125, 800)
     signal = (100.0, 1)
@@ -31,4 +36,5 @@ def interactive_ddd(J1=3.0, J2=7.0, J3=10.0):
     y = add_signals(x, spectrum, 0.5)
     obj = go.Scatter(x=x, y=y)
     data = [obj]
-    iplot(data)
+    fig = go.Figure(data=data, layout=layout)
+    iplot(fig)
