@@ -68,7 +68,7 @@ def interactive_AB(v1=150.0, v2=50.0, J=10.0):
 
 
 def interactive_ABX(va=110.0, vb=90.0, vx=200.0, Jax=5.0, Jbx=10.0, Jab=13.0):
-    x = np.linspace(50, 235, 8000)
+    x = np.linspace(0, 235, 8000)
     freqs = [va, vb, vx]
     Js = np.array(
         [[0.0, Jab, Jax],
@@ -83,8 +83,9 @@ def interactive_ABX(va=110.0, vb=90.0, vx=200.0, Jax=5.0, Jbx=10.0, Jab=13.0):
 
 
 def interactive_AAXX(va=110.0, vx=90.0,
-                     Jaa=15.0, Jxx=15.0, Jax=7.0, Jax_prime=7.0):
-    x = np.linspace(-10, 210, 8000)
+                     Jaa=15.0, Jxx=15.0, Jax=7.0, Jax_prime=7.0,
+                     min_=-10, max_=210):
+    x = np.linspace(min_, max_, 8000)
     freqs = [va, va, vx, vx]
     Js = np.array(
         [[0.0, Jaa, Jax, Jax_prime],
@@ -97,3 +98,16 @@ def interactive_AAXX(va=110.0, vx=90.0,
     data = [obj]
     fig = go.Figure(data=data, layout=layout)
     iplot(fig)
+
+
+def para_benzene(va=50.0, vx=215.0):
+    interactive_AAXX(va=va, vx=vx,
+                     Jaa=2.0, Jxx=2, Jax=8.0, Jax_prime=0.0,
+                     min_=0, max_=250)
+
+
+def anti_gauche(va=110.0, vx=90.0,
+                Jaa=-13.0, Jxx=-13.0, Jax=5.5, Jax_prime=5.5):
+    interactive_AAXX(va=va, vx=vx,
+                     Jaa=Jaa, Jxx=Jxx, Jax=Jax, Jax_prime=Jax_prime,
+                     min_=0, max_=250)
