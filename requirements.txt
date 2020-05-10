@@ -1,6 +1,3 @@
-numpy
-scipy
-matplotlib
+nmrsim==0.5.0
 plotly
 ipywidgets
-nbinteract
