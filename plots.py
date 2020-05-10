@@ -109,7 +109,7 @@ def para_benzene(va=50.0, vx=215.0):
                      min_=0, max_=250)
 
 
-def anti_gauche(va=110.0, vx=90.0,
+def anti_gauche(va=90.0, vx=110.0,
                 Jaa=-13.0, Jxx=-13.0, Jax=5.5, Jax_prime=5.5):
     interactive_AAXX(va=va, vx=vx,
                      Jaa=Jaa, Jxx=Jxx, Jax=Jax, Jax_prime=Jax_prime,
