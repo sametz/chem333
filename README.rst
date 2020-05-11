@@ -1,6 +1,11 @@
 .. image:: https://mybinder.org/badge.svg
    :target: https://mybinder.org/v2/gh/sametz/chem333/master
 
+Button below for testing:
+
+.. image:: https://mybinder.org/badge.svg
+   :target: https://mybinder.org/v2/gh/sametz/chem333/nmrsim
+
 UNDER CONSTRUCTION
 ==================
 

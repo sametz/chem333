@@ -27,12 +27,8 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 1,
-   "metadata": {
-    "pycharm": {
-     "is_executing": false
-    }
-   },
+   "execution_count": 2,
+   "metadata": {},
    "outputs": [
     {
      "data": {
@@ -113,17 +109,13 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 2,
-   "metadata": {
-    "pycharm": {
-     "is_executing": false
-    }
-   },
+   "execution_count": 3,
+   "metadata": {},
    "outputs": [
     {
      "data": {
       "application/vnd.jupyter.widget-view+json": {
-       "model_id": "530dcbe2799c4899934266b729afcf66",
+       "model_id": "3bd4aa1b35e645fb8442a336a13b6027",
        "version_major": 2,
        "version_minor": 0
       },
@@ -143,12 +135,8 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 3,
-   "metadata": {
-    "pycharm": {
-     "is_executing": false
-    }
-   },
+   "execution_count": 4,
+   "metadata": {},
    "outputs": [],
    "source": [
     "# space"
@@ -219,13 +207,13 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 4,
+   "execution_count": 5,
    "metadata": {},
    "outputs": [
     {
      "data": {
       "application/vnd.jupyter.widget-view+json": {
-       "model_id": "0d5126b9ddf24356bb3defbaf5984101",
+       "model_id": "0c74e2e52c9340f18ac6ee5d1ff8d557",
        "version_major": 2,
        "version_minor": 0
       },
@@ -258,13 +246,13 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 5,
+   "execution_count": 6,
    "metadata": {},
    "outputs": [
     {
      "data": {
       "application/vnd.jupyter.widget-view+json": {
-       "model_id": "fe8b6f0e2f854845a2fddb29c5842aef",
+       "model_id": "e55335fa5b3b48b7bd1f292057fdeb35",
        "version_major": 2,
        "version_minor": 0
       },
@@ -284,7 +272,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 6,
+   "execution_count": 7,
    "metadata": {},
    "outputs": [],
    "source": [
@@ -470,13 +458,13 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 7,
+   "execution_count": 8,
    "metadata": {},
    "outputs": [
     {
      "data": {
       "application/vnd.jupyter.widget-view+json": {
-       "model_id": "c4b2bf877137454da35f9a1db14898c6",
+       "model_id": "94a3249e2c004d158881f56661ce43f7",
        "version_major": 2,
        "version_minor": 0
       },
@@ -508,7 +496,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 8,
+   "execution_count": 9,
    "metadata": {},
    "outputs": [],
    "source": [
@@ -541,7 +529,7 @@
     "\n",
     "- Change vb back to 90 Hz. Here, the chemical shift difference between $H_A$ and $H_B$ is less than twice $J_{AB}$, and if it were analyzed as a first-order pattern you would start to see small discrepancies. \n",
     "\n",
-    "- Change vb to 102 Hz. To accurately determine the chemical shifts and coupling constants from this signal, a more elaborate calculation is required. If you are interested in the details, this type of calculation is described in detail here://link . At this point, the AB signal more strongly resembles two sets of overlapping AB quartets. The first, third, fourth, and seventh peaks from left to right (the two smallest and the two largest peaks) are one AB quartet, the second, 5th, 6th, and 8th are the other. Solving these patterns involves identifying the two pairs of AB quartets and solving them first.\n",
+    "- Change vb to 102 Hz. To accurately determine the chemical shifts and coupling constants from this signal, a more elaborate calculation is required. If you are interested in the details, this type of calculation is described in detail [here](https://www.chem.wisc.edu/areas/reich/nmr/05-hmr-12-abx.htm) . At this point, the AB signal more strongly resembles two sets of overlapping AB quartets. The first, third, fourth, and seventh peaks from left to right (the two smallest and the two largest peaks) are one AB quartet, the second, 5th, 6th, and 8th are the other. Solving these patterns involves identifying the two pairs of AB quartets and solving them first.\n",
     "\n",
     "- Change vb to 106.5 Hz. At this point, one of the two AB quartets has collapsed to a singlet, and the AB part of the ABX spectrum reduces to 5 peaks total, with two being very small. This could easily be mistaken for a singlet and a doublet.\n",
     "\n",
@@ -550,13 +538,13 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 9,
+   "execution_count": 10,
    "metadata": {},
    "outputs": [
     {
      "data": {
       "application/vnd.jupyter.widget-view+json": {
-       "model_id": "7bf4555fbb8c4868b89ec013d4e51345",
+       "model_id": "1d42520ed5ae4699a8e73e58829422a0",
        "version_major": 2,
        "version_minor": 0
       },
@@ -588,13 +576,13 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 10,
+   "execution_count": 11,
    "metadata": {},
    "outputs": [
     {
      "data": {
       "application/vnd.jupyter.widget-view+json": {
-       "model_id": "da919e60ab6a40c0a76588615b0634b2",
+       "model_id": "2a94ae874b3f458b9eb33e3a4bcf1bf5",
        "version_major": 2,
        "version_minor": 0
       },
@@ -619,23 +607,23 @@
    "source": [
     "In acyclic systems, an X-CH<sub>2</sub>-CH<sub>2</sub>-Y unit does not necessarily appear as a pair of triplets.\n",
     "\n",
-    "- If the two methylene signals are close together in chemical shift, significant distortions appear. The interactive plot below should load as a \"messtet\" of two signals at 140 Hz and 160 Hz. Slide va lower and/or vx higher. As separation increases, the signals start to resemble a pair of triplets. Keep going until va is 15 Hz and vx is 200 Hz."
+    "- If the two methylene signals are close together in chemical shift, significant distortions appear. The interactive plot below should load as a \"messtet\" of two signals at 90 Hz and 110 Hz. Slide va lower and/or vx higher. As separation increases, the signals start to resemble a pair of triplets. Keep going until va is 50 Hz and vx is 200 Hz."
    ]
   },
   {
    "cell_type": "code",
-   "execution_count": 11,
+   "execution_count": 12,
    "metadata": {},
    "outputs": [
     {
      "data": {
       "application/vnd.jupyter.widget-view+json": {
-       "model_id": "e540bfd9c41f48b487b9e54a9ffaab55",
+       "model_id": "636cd4d49bc14b65a1f4295e8c9f0d36",
        "version_major": 2,
        "version_minor": 0
       },
       "text/plain": [
-       "interactive(children=(FloatSlider(value=110.0, description='va', max=200.0), FloatSlider(value=90.0, descripti…"
+       "interactive(children=(FloatSlider(value=90.0, description='va', max=200.0), FloatSlider(value=110.0, descripti…"
       ]
      },
      "metadata": {},
@@ -677,9 +665,9 @@
  ],
  "metadata": {
   "kernelspec": {
-   "display_name": "chem333",
+   "display_name": "jupyterhub",
    "language": "python",
-   "name": "chem333"
+   "name": "jupyterhub"
   },
   "language_info": {
    "codemirror_mode": {
