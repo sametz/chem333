@@ -4,7 +4,7 @@
 Button below for testing:
 
 .. image:: https://mybinder.org/badge.svg
-   :target: https://mybinder.org/v2/gh/sametz/chem333/nmrsim
+   :target: https://mybinder.org/v2/gh/sametz/chem333/dash
 
 UNDER CONSTRUCTION
 ==================
