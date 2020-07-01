@@ -45,9 +45,10 @@ def lineshape_from_peaklist(peaklist, w=0.5, points=800, limits=None):
     return x, y
 
 
-def dd(J1, J2, v=100.0, i=1.0):
+def dd(J1, J2, w, v=100.0, i=1.0):
     peaklist = multiplet((v, i), [(J1, 1), (J2, 1)])
     x, y = lineshape_from_peaklist(peaklist,
+                                   w=w,
                                    points=4000,
                                    limits=(v - 20, v + 20))
     return hv.Curve(zip(x, y))\
@@ -55,8 +56,8 @@ def dd(J1, J2, v=100.0, i=1.0):
         .redim(y=hv.Dimension('intensity'), x=hv.Dimension('𝜈 (Hz)'))
 
 
-def dd_interactive(J1, J2):
-    return dd(J1, J2)
+def dd_interactive(J1, J2, w):
+    return dd(J1, J2, w)
 
 
 def ddd(J1, J2, J3, v=100.0, i=1.0):
