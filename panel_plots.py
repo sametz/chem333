@@ -1,5 +1,16 @@
+"""Functions used by notebooks for interactive NMR plots, using Holoviews/Panel.
+
+When `panel.interact` passes args/kwargs to a function, all of the args/kwargs
+will have a widget associated with it. In order to expose only the variables
+that will be modified using widgets, wrapper functions that take only those
+variables as arguements are required.
+
+TODO: consider making all the non-wrapper functions private
+"""
+
 import holoviews as hv
 import numpy as np
+import panel as pn
 
 from nmrsim.firstorder import multiplet
 from nmrsim.math import add_lorentzians
@@ -95,3 +106,21 @@ def ddd_interactive(J1, J2, J3):
 
 def dddd_interactive(J1, J2, J3, J4):
     return n_coupling(J1, J2, J3, J4)
+
+
+dd_app = pn.interact(dd_interactive,
+                     J1=(0.0, 10.0, 0.1, 3.0),
+                     J2=(0.0, 10.0, 0.1, 7.0),
+                     w=(0.0, 5.0, 0.1, 0.5)
+                     )
+
+ddd_app = pn.interact(ddd_interactive,
+                      J1=(0.0, 15.0, 0.1, 12.0),
+                      J2=(0.0, 15.0, 0.1, 10.0),
+                      J3=(0.0, 15.0, 0.1, 4.0))
+
+dddd_app = pn.interact(dddd_interactive,
+                       J1=(0, 20, 0.1, 3.8),
+                       J2=(0, 20, 0.1, 6.6),
+                       J3=(0, 20, 0.1, 6.6),
+                       J4=(0, 20, 0.1, 6.6))
