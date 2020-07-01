@@ -13,11 +13,11 @@ def lineshape_from_peaklist(peaklist, w=0.5, points=800, limits=None):
     ----------
     peaklist : [(float, float)...]
         A list of (frequency, intensity) tuples
-    w : float
+    w : float, optional (default = 0.5)
         Peak width at half height (Hz)
-    points : int
+    points : int, optional (default = 800)
         The number of data points in the lineshape
-    limits : (float, float)
+    limits : (float, float), optional
         The frequency (left/right) limits for the lineshape
 
     Returns
@@ -45,41 +45,52 @@ def lineshape_from_peaklist(peaklist, w=0.5, points=800, limits=None):
     return x, y
 
 
-def dd(J1, J2, w, v=100.0, i=1.0):
-    peaklist = multiplet((v, i), [(J1, 1), (J2, 1)])
+def n_coupling(*j_args, v=100.0, i=1.0,
+               w=0.5, points=4000,
+               limits=None):
+    """Given parameters for a first-order multiplet, return a holoviews plot for it.
+
+    Parameters
+    ----------
+    j_args: float
+        One or more coupling constants, in Hz
+    v: float, optional (default = 100.0 Hz)
+        The frequency of the center of the multiplet, in Hz
+    i: float, optional (default = 1.0)
+        The intensity of the signal.
+        When w = 0.5 Hz, i = the total of the peak heights,
+        e.g. a doublet would default to two peaks with height 0.5.
+    w: float, optional (default = 0.5 Hz)
+    points: int, optional (default = 4000 datapoints)
+    limits: (int or float, int or float), optional
+        A tuple of minimum and maximum frequencies (Hz) for the plot.
+
+    Returns
+    -------
+    hv.Curve() object
+        Formatted 'NMR-style' with labeled axes and the x-axis reversed
+    """
+    couplings = [(j, 1) for j in j_args]
+    peaklist = multiplet((v, i), couplings)
+
+    # TODO: will n_coupling merit its own limit/points defaults, or just use lineshape_from_peaklist's?
+    if not limits:
+        limits = (v - 20, v + 20)
     x, y = lineshape_from_peaklist(peaklist,
                                    w=w,
-                                   points=4000,
-                                   limits=(v - 20, v + 20))
-    return hv.Curve(zip(x, y))\
-        .options(axiswise=True, invert_xaxis=True)\
+                                   points=points,
+                                   limits=limits)
+    return hv.Curve(zip(x, y)) \
+        .options(axiswise=True, invert_xaxis=True) \
         .redim(y=hv.Dimension('intensity'), x=hv.Dimension('𝜈 (Hz)'))
 
 
 def dd_interactive(J1, J2, w):
-    return dd(J1, J2, w)
-
-
-def ddd(J1, J2, J3, v=100.0, i=1.0):
-    peaklist = multiplet((v, i), [(J1, 1), (J2, 1), (J3, 1)])
-    x, y = lineshape_from_peaklist(peaklist, limits=(v - 20, v + 20))
-    return hv.Curve(zip(x, y)) \
-        .options(axiswise=True, invert_xaxis=True) \
-        .redim(y=hv.Dimension('intensity'), x=hv.Dimension('𝜈 (Hz)'))
+    return n_coupling(J1, J2, w=w)
 
 
 def ddd_interactive(J1, J2, J3):
-    return ddd(J1, J2, J3)
-
-
-def n_coupling(*j_args):
-    couplings = [(j, 1) for j in j_args]
-    print(couplings)
-    peaklist = multiplet((100, 1), couplings)
-    x, y = lineshape_from_peaklist(peaklist, limits=(50, 150))
-    return hv.Curve(zip(x, y)) \
-        .options(axiswise=True, invert_xaxis=True) \
-        .redim(y=hv.Dimension('intensity'), x=hv.Dimension('𝜈 (Hz)'))
+    return n_coupling(J1, J2, J3)
 
 
 def dddd_interactive(J1, J2, J3, J4):
