@@ -108,3 +108,4 @@ venv.bak/
 .idea/
 
 .vscode/
+/temp_issue.md

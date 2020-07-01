@@ -70,3 +70,17 @@ def ddd(J1, J2, J3, v=100.0, i=1.0):
 
 def ddd_interactive(J1, J2, J3):
     return ddd(J1, J2, J3)
+
+
+def n_coupling(*j_args):
+    couplings = [(j, 1) for j in j_args]
+    print(couplings)
+    peaklist = multiplet((100, 1), couplings)
+    x, y = lineshape_from_peaklist(peaklist, limits=(50, 150))
+    return hv.Curve(zip(x, y)) \
+        .options(axiswise=True, invert_xaxis=True) \
+        .redim(y=hv.Dimension('intensity'), x=hv.Dimension('𝜈 (Hz)'))
+
+
+def dddd_interactive(J1, J2, J3, J4):
+    return n_coupling(J1, J2, J3, J4)
