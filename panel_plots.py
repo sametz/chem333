@@ -3,7 +3,7 @@
 When `panel.interact` passes args/kwargs to a function, all of the args/kwargs
 will have a widget associated with it. In order to expose only the variables
 that will be modified using widgets, wrapper functions that take only those
-variables as arguements are required.
+variables as arguments are required.
 
 TODO: consider making all the non-wrapper functions private
 """
@@ -54,6 +54,94 @@ def lineshape_from_peaklist(peaklist, w=0.5, points=800, limits=None):
     x = np.linspace(l_limit, r_limit, points)
     y = add_lorentzians(x, peaklist, w)
     return x, y
+
+
+def n_plus_one(J, n, v=100, i=1.0, w=0.5):
+    """Given n and coupling constant J, return the lineshape for the corresponding
+    n + 1 multiplet.
+
+    Parameters
+    ----------
+    J: float
+        the coupling constant in Hz
+    n: int
+        the number of neighboring nuclei (the 'n' in the 'n + 1' rule)
+    v: float, optional (default = 100)
+        the center of the multiplet (in Hz)
+    i: float, optional (default = 1.0)
+        The total of the individual peak's max intensities.
+        Analogous to the integration of the signal when w = 0.5.
+    w: float, optional (default = 0.5)
+        The peak width at half-height (in Hz)
+
+    Returns
+    -------
+    hv.Curve() object
+        Formatted 'NMR-style' with labeled axes and the x-axis reversed
+
+    """
+    singlet = (v, i)  # center at 100 Hz; intensity 1
+    couplings = [(J, n)]
+    peaklist = multiplet(singlet, couplings)
+    x, y = lineshape_from_peaklist(peaklist, w=w)
+    return hv.Curve(zip(x, y))\
+        .options(axiswise=True, invert_xaxis=True)\
+        .redim(y=hv.Dimension('intensity'), x=hv.Dimension('𝜈 (Hz)'))
+
+
+def toggle_doublet(coupled=False):
+    """Return a plot that simulates turning on/off a 10-Hz J coupling to a signal.
+
+    Parameters
+    ----------
+    coupled : bool
+        Whether to initialize with coupling on or not.
+
+    Returns
+    -------
+    hv.Curve() object
+    """
+    n = 1 if coupled else 0
+    return n_plus_one(10.0, n, w=0.5)\
+        .options(xlim=(120, 80), ylim=(-0.1, 1.1))
+
+
+def two_doublets(v1, v2, J, w=0.5, points=10000):
+    """Return a plot for a first-order AX system.
+
+    Parameters
+    ----------
+    v1, v2 : float
+        The chemical shifts in Hz for the two signals
+    J : float
+        The coupling constant in Hz
+    w: float, optional (default = 0.5)
+        The peak width at half-height (in Hz)
+    points : int, optional (default = 10000)
+        The number of data points in the lineshape
+
+    Returns
+    -------
+    hv.Curve() object
+     """
+    peak1 = (v1, 1)
+    couplings = [(J, 1)]
+    peak2 = (v2, 1)
+    peaklist = multiplet(peak1, couplings) + multiplet(peak2, couplings)
+    x, y = lineshape_from_peaklist(peaklist, w=w, points=points)
+    return hv.Curve(zip(x, y)).options(axiswise=True, invert_xaxis=True,
+                                       xlabel='𝜈',
+                                       ylabel='intensity')
+
+
+def singlet_to_triplet(n):
+    """Return a plot showing transformation of s -> d -> t as n increases."""
+    return n_plus_one(J=10.0, n=n, w=0.5).options(ylim=(-0.1, 1.1))
+
+
+def simple_multiplet(n):
+    """Return a plot for an n + 1 multiplet."""
+    return n_plus_one(J=7.0, n=n, w=0.5).options(ylim=(-0.1, 1.1))
 
 
 def n_coupling(*j_args, v=100.0, i=1.0,
