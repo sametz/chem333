@@ -12,6 +12,7 @@ import holoviews as hv
 import numpy as np
 import panel as pn
 
+from nmrsim.discrete import AB
 from nmrsim.firstorder import multiplet
 from nmrsim.math import add_lorentzians
 
@@ -84,8 +85,8 @@ def n_plus_one(J, n, v=100, i=1.0, w=0.5):
     couplings = [(J, n)]
     peaklist = multiplet(singlet, couplings)
     x, y = lineshape_from_peaklist(peaklist, w=w)
-    return hv.Curve(zip(x, y))\
-        .options(axiswise=True, invert_xaxis=True)\
+    return hv.Curve(zip(x, y)) \
+        .options(axiswise=True, invert_xaxis=True) \
         .redim(y=hv.Dimension('intensity'), x=hv.Dimension('𝜈 (Hz)'))
 
 
@@ -102,7 +103,7 @@ def toggle_doublet(coupled=False):
     hv.Curve() object
     """
     n = 1 if coupled else 0
-    return n_plus_one(10.0, n, w=0.5)\
+    return n_plus_one(10.0, n, w=0.5) \
         .options(xlim=(120, 80), ylim=(-0.1, 1.1))
 
 
@@ -212,3 +213,23 @@ dddd_app = pn.interact(dddd_interactive,
                        J2=(0, 20, 0.1, 6.6),
                        J3=(0, 20, 0.1, 6.6),
                        J4=(0, 20, 0.1, 6.6))
+
+
+def ab_wrapper(v1, v2, J):
+    """A wrapper for nmrsim.discrete.AB so that chemical shift and J values are arguments."""
+    vab = abs(v2 - v1)
+    vcentr = (v1 + v2) / 2
+    peaklist = AB(J, vab, vcentr)
+    return peaklist
+
+
+def ab_distortion(v1=100.0, v2=500.0):
+    v1_arrow = hv.Arrow(v1, 0, '𝜈₁', '^')
+    v2_arrow = hv.Arrow(v2, 0, '𝜈₂', '^')
+    # sufficient datapoints to mitigate inaccurate intensities and "jittering"
+    datapoints = max(int(abs(v2 - v1) * 100), 800)
+
+    coupled = lineshape_from_peaklist(ab_wrapper(v1, v2, 10), points=datapoints)
+    plot = hv.Curve(zip(*coupled)) * v1_arrow * v2_arrow
+    return plot.options(axiswise=True, invert_xaxis=True,
+                        xlabel='𝜈').redim(y=hv.Dimension('intensity', range=(-0.4, 1.2)))
