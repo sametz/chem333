@@ -183,7 +183,9 @@ def n_coupling(*j_args, v=100.0, i=1.0,
                                    points=points,
                                    limits=limits)
     return hv.Curve(zip(x, y)) \
-        .options(axiswise=True, invert_xaxis=True) \
+        .options(axiswise=True, invert_xaxis=True,
+                 height=300, responsive=True
+                 ) \
         .redim(y=hv.Dimension('intensity'), x=hv.Dimension('𝜈 (Hz)'))
 
 
@@ -259,7 +261,9 @@ def abx(va, vb, vx, Jax, Jbx, Jab):
     xy = lineshape_from_peaklist(peaklist, points=datapoints)
     plot = hv.Curve(zip(*xy))
     return plot.options(axiswise=True, invert_xaxis=True,
-                        xlabel='𝜈').redim(y=hv.Dimension('intensity', range=(-0.4, 1.2)))
+                        xlabel='𝜈',
+                        height=300, responsive=True
+                        ).redim(y=hv.Dimension('intensity', range=(-0.4, 1.2)))
 
 
 def interactive_aaxx(va=110.0, vx=90.0,
@@ -276,7 +280,9 @@ def interactive_aaxx(va=110.0, vx=90.0,
     xy = lineshape_from_peaklist(peaklist, points=datapoints)
     plot = hv.Curve(zip(*xy))
     return plot.options(axiswise=True, invert_xaxis=True,
-                        xlabel='𝜈').redim(y=hv.Dimension('intensity', range=(-0.4, 1.2)))
+                        xlabel='𝜈',
+                        height=300, responsive=True
+                        ).redim(y=hv.Dimension('intensity', range=(-0.4, 1.2)))
 
 
 def para_benzene(va=50.0, vx=215.0):
