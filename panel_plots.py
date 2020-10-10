@@ -12,9 +12,11 @@ import holoviews as hv
 import numpy as np
 import panel as pn
 
+# from nmrsim import SpinSystem
 from nmrsim.discrete import AB
 from nmrsim.firstorder import multiplet
 from nmrsim.math import add_lorentzians
+from nmrsim.qm import qm_spinsystem
 
 
 def lineshape_from_peaklist(peaklist, w=0.5, points=800, limits=None):
@@ -233,3 +235,62 @@ def ab_distortion(v1=100.0, v2=500.0):
     plot = hv.Curve(zip(*coupled)) * v1_arrow * v2_arrow
     return plot.options(axiswise=True, invert_xaxis=True,
                         xlabel='𝜈').redim(y=hv.Dimension('intensity', range=(-0.4, 1.2)))
+
+
+def abx_wrapper(va=110.0, vb=90.0, vx=200.0, Jax=5.0, Jbx=10.0, Jab=13.0):
+    # x = np.linspace(0, 235, 8000)
+    freqs = [va, vb, vx]
+    Js = np.array(
+        [[0.0, Jab, Jax],
+         [Jab, 0.0, Jbx],
+         [Jax, Jbx, 0]])
+    peaklist = qm_spinsystem(freqs, Js)
+    # y = add_lorentzians(x, peaklist, 0.5)
+    return peaklist
+
+
+def abx(va, vb, vx, Jax, Jbx, Jab):
+    peaklist = abx_wrapper(va, vb, vx, Jax, Jbx, Jab)
+    vs = [va, vb, vx]
+    vmax = max(vs)
+    vmin = min(vs)
+    # sufficient datapoints to mitigate inaccurate intensities and "jittering"
+    datapoints = max(int(vmax - vmin) * 100, 800)
+    xy = lineshape_from_peaklist(peaklist, points=datapoints)
+    plot = hv.Curve(zip(*xy))
+    return plot.options(axiswise=True, invert_xaxis=True,
+                        xlabel='𝜈').redim(y=hv.Dimension('intensity', range=(-0.4, 1.2)))
+
+
+def interactive_aaxx(va=110.0, vx=90.0,
+                     Jaa=15.0, Jxx=15.0, Jax=7.0, Jax_prime=7.0):
+    datapoints = max(abs(int(va - vx)) * 100, 800)
+    # x = np.linspace(min_, max_, 8000)
+    freqs = [va, va, vx, vx]
+    Js = np.array(
+        [[0.0, Jaa, Jax, Jax_prime],
+         [Jaa, 0.0, Jax_prime, Jax],
+         [Jax, Jax_prime, 0, Jxx],
+         [Jax_prime, Jax, Jxx, 0]])
+    peaklist = qm_spinsystem(freqs, Js)
+    xy = lineshape_from_peaklist(peaklist, points=datapoints)
+    plot = hv.Curve(zip(*xy))
+    return plot.options(axiswise=True, invert_xaxis=True,
+                        xlabel='𝜈').redim(y=hv.Dimension('intensity', range=(-0.4, 1.2)))
+
+
+def para_benzene(va=50.0, vx=215.0):
+    return interactive_aaxx(
+        va=va, vx=vx,
+        Jaa=2.0, Jxx=2, Jax=8.0, Jax_prime=0.0)
+
+
+def anti_gauche(va=90.0, vx=110.0,
+                Jaa=-13.0, Jxx=-13.0, Jax=5.5, Jax_prime=5.5):
+    return interactive_aaxx(
+        va=va, vx=vx,
+        Jaa=Jaa, Jxx=Jxx, Jax=Jax, Jax_prime=Jax_prime)
+
+
+def anti_gauche_wrapper(Jax=5.5, Jax_prime=5.5):
+    return anti_gauche(va=50, vx=150, Jax=Jax, Jax_prime=Jax_prime)
