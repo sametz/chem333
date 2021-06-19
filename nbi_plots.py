@@ -1,5 +1,5 @@
 """Currently just a copy of plots.py that will be converted to nbinteractive
-plot routines gradually."""
+plot routines gradually. Currently broken and may be abandoned."""
 
 
 from ipywidgets import interactive, interact
@@ -30,6 +30,7 @@ def nbi_dd(J1=3.0, J2=7.0, w=0.5):
     # fig = go.Figure(data=data, layout=layout)
     # iplot(fig)
     return y
+
 
 def interactive_ddd(J1=4.0, J2=10.0, J3=12.0):
     args = (J1, J2, J3)

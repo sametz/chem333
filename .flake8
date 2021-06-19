@@ -1,0 +1,11 @@
+[flake8]
+exclude =
+    .git,
+    __pycache__,
+    cruft/,
+    *.ipynb,
+    .ipynb_checkpoints/
+ignore =
+    E731
+
+max-line-length = 119

@@ -1,13 +1,7 @@
-# from ipywidgets import interactive
-# import matplotlib as mpl
-# import matplotlib.pyplot as plt
 import numpy as np
-# import plotly
 import plotly.graph_objs as go
-from plotly.offline import iplot  #, download_plotlyjs, init_notebook_mode, plot
+from plotly.offline import iplot
 
-# from nmrtools.nmrmath import first_order, nspinspec
-# from nmrtools.nmrplot import add_signals
 from nmrsim.firstorder import multiplet
 from nmrsim.math import add_lorentzians
 from nmrsim.qm import qm_spinsystem

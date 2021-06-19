@@ -1,3 +1,6 @@
 nmrsim==0.5.1
-plotly
-ipywidgets
+# plotly
+# ipywidgets
+panel
+bokeh
+holoviews
