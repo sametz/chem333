@@ -35,4 +35,3 @@ has the list of necessary Python packages. Python 3.6 was used for the
 project, but other Python 3 installations may work. It's strongly recommended
 to use a virtual environment (or, if you use a conda/Anaconda installation,
 a conda environment) for this.
-
