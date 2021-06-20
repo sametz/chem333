@@ -2,3 +2,6 @@ Logging time taken to launch binder in various configs.
 
 2021-06-19
 ==========
+Initial launch: 1:41
+However: Sparse dot product was causing error.
+The current CHEM333 conda environment uses sparse 0.9.1 and works.
