@@ -5,3 +5,114 @@ Logging time taken to launch binder in various configs.
 Initial launch: 1:41
 However: Sparse dot product was causing error.
 The current CHEM333 conda environment uses sparse 0.9.1 and works.
+
+---------------------------------------------------------------------------
+TypingError                               Traceback (most recent call last)
+<ipython-input-11-d5334b7c5bf9> in <module>
+      5                               Jax=(-20, 20, 0.1, 5),
+      6                               Jbx=(-20, 20, 0.1, 10),
+----> 7                               Jab=(-20, 20, 0.1, 13))
+      8
+      9 # pn.Row(abx_interactive[0], abx_interactive[1])
+
+/srv/conda/envs/notebook/lib/python3.7/site-packages/panel/interact.py in __call__(self, _InteractFactory__interact_f, **kwargs)
+    486         #    def f(*args, **kwargs):
+    487         #        ...
+--> 488         w = self.widget(f)
+    489         try:
+    490             f.widget = w
+
+/srv/conda/envs/notebook/lib/python3.7/site-packages/panel/interact.py in widget(self, f)
+    409             The function to which the interactive widgets are tied.
+    410         """
+--> 411         return self.cls(f, self.opts, **self.kwargs)
+    412
+    413     def __call__(self, __interact_f=None, **kwargs):
+
+/srv/conda/envs/notebook/lib/python3.7/site-packages/panel/interact.py in __init__(self, object, params, **kwargs)
+    149             widgets.append(('manual', Button(name=self.manual_name)))
+    150         self._widgets = OrderedDict(widgets)
+--> 151         pane = self.object(**self.kwargs)
+    152         if isinstance(pane, Viewable):
+    153             self._pane = pane
+
+~/panel_plots.py in abx(va, vb, vx, Jax, Jbx, Jab)
+    253
+    254 def abx(va, vb, vx, Jax, Jbx, Jab):
+--> 255     peaklist = abx_wrapper(va, vb, vx, Jax, Jbx, Jab)
+    256     vs = [va, vb, vx]
+    257     vmax = max(vs)
+
+~/panel_plots.py in abx_wrapper(va, vb, vx, Jax, Jbx, Jab)
+    247          [Jab, 0.0, Jbx],
+    248          [Jax, Jbx, 0]])
+--> 249     peaklist = qm_spinsystem(freqs, Js)
+    250     # y = add_lorentzians(x, peaklist, 0.5)
+    251     return peaklist
+
+/srv/conda/envs/notebook/lib/python3.7/site-packages/nmrsim/qm.py in qm_spinsystem(cache, sparse, *args, **kwargs)
+    522     if not (cache and sparse):
+    523         return secondorder_dense(*args, **kwargs)
+--> 524     return secondorder_sparse(*args, **kwargs)
+
+/srv/conda/envs/notebook/lib/python3.7/site-packages/nmrsim/qm.py in secondorder_sparse(freqs, couplings, normalize, **kwargs)
+    467     """
+    468     nspins = len(freqs)
+--> 469     H = hamiltonian_sparse(freqs, couplings)
+    470     peaklist = solve_hamiltonian(H.todense(), nspins, **kwargs)
+    471     if normalize:
+
+/srv/conda/envs/notebook/lib/python3.7/site-packages/nmrsim/qm.py in hamiltonian_sparse(v, J)
+    228     if not isinstance(J, np.ndarray):
+    229         J = np.array(J)
+--> 230     H = sparse.tensordot(sparse.COO(v), Lz, axes=1)
+    231     scalars = 0.5 * sparse.COO(J)
+    232     H += sparse.tensordot(scalars, Lproduct, axes=2)
+
+/srv/conda/envs/notebook/lib/python3.7/site-packages/sparse/_common.py in tensordot(a, b, axes, return_type)
+    143     at = a.transpose(newaxes_a).reshape(newshape_a)
+    144     bt = b.transpose(newaxes_b).reshape(newshape_b)
+--> 145     res = _dot(at, bt, return_type)
+    146     return res.reshape(olda + oldb)
+    147
+
+/srv/conda/envs/notebook/lib/python3.7/site-packages/sparse/_common.py in _dot(a, b, return_type)
+    399         np.cumsum(np.bincount(b.coords[0], minlength=b.shape[0]), out=b_indptr[1:])
+    400         coords, data = _dot_coo_coo_type(a.dtype, b.dtype)(
+--> 401             out_shape, a.coords, b.coords, a.data, b.data, a_indptr, b_indptr
+    402         )
+    403         out = COO(coords, data, shape=out_shape, has_duplicates=False, sorted=False)
+
+/srv/conda/envs/notebook/lib/python3.7/site-packages/numba/core/dispatcher.py in _compile_for_args(self, *args, **kws)
+    418                 e.patch_message(msg)
+    419
+--> 420             error_rewrite(e, 'typing')
+    421         except errors.UnsupportedError as e:
+    422             # Something unsupported is present in the user code, add help info
+
+/srv/conda/envs/notebook/lib/python3.7/site-packages/numba/core/dispatcher.py in error_rewrite(e, issue_type)
+    359                 raise e
+    360             else:
+--> 361                 raise e.with_traceback(None)
+    362
+    363         argtypes = []
+
+TypingError: Failed in nopython mode pipeline (step: nopython frontend)
+No implementation of function Function(<built-in function setitem>) found for signature:
+
+ >>> setitem(array(float64, 1d, C), int64, complex128)
+
+There are 16 candidate implementations:
+    - Of which 16 did not match due to:
+    Overload of function 'setitem': File: <numerous>: Line N/A.
+      With argument(s): '(array(float64, 1d, C), int64, complex128)':
+     No match.
+
+During: typing of setitem at /srv/conda/envs/notebook/lib/python3.7/site-packages/sparse/_common.py (953)
+
+File "../../srv/conda/envs/notebook/lib/python3.7/site-packages/sparse/_common.py", line 953:
+    def _dot_coo_coo(
+        <source elided>
+                ):
+                    sums[k] += av * bv
+                    ^
