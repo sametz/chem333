@@ -1,0 +1,4 @@
+Logging time taken to launch binder in various configs.
+
+2021-06-19
+==========
