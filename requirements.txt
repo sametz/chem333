@@ -1,3 +1,4 @@
+sparse==0.10
 nmrsim==0.5.1
 # plotly
 # ipywidgets
