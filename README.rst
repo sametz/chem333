@@ -1,7 +1,7 @@
 Click the button below to launch a Binder session:
 
 .. image:: https://mybinder.org/badge.svg
-   :target: https://mybinder.org/v2/gh/sametz/chem333/develop
+   :target: https://mybinder.org/v2/gh/sametz/chem333/cleanup
 
 The notebooks of interest to CHEM333 students are:
 
