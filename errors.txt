@@ -1,0 +1,16 @@
+notebooks initiate with warning:
+WARNING:param.main: pandas could not register all extension types imports failed with the following error: cannot import name 'ABCIndexClass' from 'pandas.core.dtypes.generic' (/srv/conda/envs/notebook/lib/python3.7/site-packages/pandas/core/dtypes/generic.py)
+
+All notebooks otherwise execute properly.
+
+On server param 1.11.1, pandas 1.3.0
+panel 0.11.3
+When I used binder terminal and imported holoviews, I got the above error.
+holoviews 1.14.4
+python 3.7.10
+
+This is a very fresh error so it should get fixed soon. Make sure once it's fixed that the binder repository is refreshed.
+https://github.com/holoviz/holoviews/issues/5009
+
+The initial commit in Pandas is:
+https://github.com/pandas-dev/pandas/pull/38329/commits/8ff83f75dc3568361b602d7d705003f827e3a301
