@@ -1,5 +1,7 @@
 sparse==0.10
 nmrsim==0.5.1
+# pandas has to be limited until holoviews patches its imports
+pandas<1.3
 # plotly
 # ipywidgets
 panel
