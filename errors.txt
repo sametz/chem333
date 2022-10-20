@@ -14,3 +14,6 @@ https://github.com/holoviz/holoviews/issues/5009
 
 The initial commit in Pandas is:
 https://github.com/pandas-dev/pandas/pull/38329/commits/8ff83f75dc3568361b602d7d705003f827e3a301
+
+2022-10-20: mybinder error on develop after push: "Your kernel does not support swap limit capabilities or the cgroup is not mounted."
+Created runtime.txt to pin python version to 3.9 (it was defaulting to 3.7)
